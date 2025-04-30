@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Gradient-Based Model Predictive Control for Planning with Latent Imagination.">
+  <meta name="keywords" content="Dream-MPC, Gradient-based Planning, Model Predictive Control, Reinforcement Learning, Robotics, World Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dream-MPC: Gradient-Based Model Predictive Control for Planning with Latent Imagination</title>
+
+  <link href="https://fonts.bunny.net/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-size-2 publication-title"><b>Dream-MPC:</b><br>Gradient-Based Model Predictive Control
+              for Planning
+              with Latent Imagination</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymous Author(s)</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Under review</span>
+            </div>
+
+            <div class="column has-text-centered">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img class="center" src="./static/images/overview.png"
+          style="width:70%; text-align: center; display:block; margin: 0 auto;"></img>
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+              <div class="content" style="margin-top: 5px;">
+                Dream-MPC performs planning during test time by combining an imaginary policy rollout using a learned world model with MPC.
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              State-of-the-art model-based Reinforcement Learning (RL) approaches either use gradient-free,
+              population-based methods for planning, learned policy networks or a combination of policy networks and
+              planning. To efficiently leverage the benefits of both paradigms, hybrid approaches that combine model
+              predictive control (MPC) with a learned model and a policy prior have shown promising results. However,
+              these hybrid approaches often rely on gradient-free optimization methods, which can be inefficient and
+              computationally expensive for high-dimensional control tasks.
+            </p>
+            <p>
+              We propose Dream-MPC, a novel approach that generates few candidate trajectories from a rolled-out policy
+              and optimizes each trajectory by gradient ascent using a learned and differentiable world model.
+              While gradient-based optimization methods can enable efficient planning both at training and test time and
+              can lead to better generalization, recent works have empirically shown that the gradient-based methods perform 
+              worse than their gradient-free counterparts. 
+              We evaluate our method on different continuous control tasks from the DeepMind Control Suite
+              and find that gradient-based planning can significantly improve the performance of learned but imperfect
+              policies at test time, but also already during training. Our results show that Dream-MPC can outperform 
+              state-of-the-art RL methods and can improve sample efficiency, highlighting
+              the potential and challenges of gradient-based planning with world models.
+            </p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Method</h2>
+          <div class="content has-text-justified">
+            <p>
+              Instead of sampling thousands of trajectories from a Gaussian distribution as done using gradient-free
+              trajectory optimization methods such as the Cross Entropy Method (CEM) or Model Predictive Path Integral
+              (MPPI), for each time step, Dream-MPC creates an initial sequence of
+              actions by performing an imaginary rollout of the policy and generates few candidate
+              trajectories by adding small perturbations to the initial sequence. Each trajectory is then refined using
+              gradient ascent to maximize the expected return, which is predicted using a learned world model. The first
+              action of the candidate trajectory with the highest expected return is applied, and the planning procedure
+              is repeated in the next time step.
+            </p>
+            <div class="publication-body img">
+              <img class="center" src="./static/images/dream_mpc.png" style="width:100%"></img>
+            </div>
+            <p>
+              While we integrate our gradient-based planner into <a href="https://arxiv.org/abs/1912.01603">Dreamer</a>
+              for
+              our experiments, our method is not limited to this algorithm and can be
+              integrated with other model-based reinforcement learning approaches such as
+              <a href="https://arxiv.org/abs/2310.16828">TD-MPC2</a> as well.
+            </p>
+            <div class="publication-body img">
+              <img class="center" src="./static/images/algo.png" style="width:100%"></img>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Main Results</h2>
+          <div class="content has-text-justified">
+            <p>
+              We evaluate the performance of Dream-MPC on eight tasks from the DeepMind Control Suite and compare it to
+              model-free (<a href="https://arxiv.org/abs/1910.01741">SAC+AE</a>) and model-based (<a
+                href="https://arxiv.org/abs/1811.04551">PlaNet</a>, <a
+                href="https://arxiv.org/abs/1912.01603">Dreamer</a> &
+              <a href="https://arxiv.org/abs/2312.17227">hybrid Grad-MPC</a>) online RL methods.
+            </p>
+            <div class="publication-body img">
+              <img class="center" src="./static/images/learning_curves.png" style="width:100%; margin-bottom: 30px;"></img>
+            </div>
+            <div class="publication-body img">
+              <img class="center" src="./static/images/results.png" style="width:100%"></img>
+            </div>
+          </div>
+          <h3 class="title is-4">Qualitative Comparison with Dreamer</h3>
+          <div class="body-content" style="padding-bottom: 0px;">
+            <div class="container">
+              <h4><b>Acrobot Swingup:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/acrobot-swingup_dream-mpc_s9_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/acrobot-swingup_dreamer_s9_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/acrobot-swingup_dream-mpc_s428_e5_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/acrobot-swingup_dreamer_s428_e5_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Finger Spin:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/finger-spin_dream-mpc_s9_e4_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/finger-spin_dreamer_s9_e4_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/finger-spin_dream-mpc_s428_e6_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/finger-spin_dreamer_s428_e6_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Cheetah Run:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cheetah-run_dream-mpc_s9_e2_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cheetah-run_dreamer_s9_e2_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cheetah-run_dream-mpc_s831_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cheetah-run_dreamer_s831_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Hopper Hop:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/hopper-hop_dream-mpc_s9_e6_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/hopper-hop_dreamer_s9_e6_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/hopper-hop_dream-mpc_s428_e3_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/hopper-hop_dreamer_s428_e3_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Fish Swim:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/fish-swim_dream-mpc_s9_e2_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/fish-swim_dreamer_s9_e2_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/fish-swim_dream-mpc_s428_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/fish-swim_dreamer_s428_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Cartpole Swingup:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cartpole-swingup_dream-mpc_s9_e4_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cartpole-swingup_dreamer_s9_e4_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cartpole-swingup_dream-mpc_s428_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/cartpole-swingup_dreamer_s428_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Walker Run:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/walker-run_dream-mpc_s9_e9_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/walker-run_dreamer_s9_e9_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/walker-run_dream-mpc_s428_e6_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/walker-run_dreamer_s428_e6_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Ball in Cup Catch:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/ball_in_cup-catch_dream-mpc_s9_e8_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/ball_in_cup-catch_dreamer_s9_e8_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/ball_in_cup-catch_dream-mpc_s831_e9_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                    <source src="./static/videos/ball_in_cup-catch_dreamer_s831_e9_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Takeaways</h2>
+          <div class="content has-text-justified">
+            <ul>
+              <li>Gradient-based planning can work successfully for complex problems and image-based observations and
+                can not only improve the performance of model-based RL during test time, but also already during
+                training.</li>
+              <li>The success of gradient-based planning depends on more aspects than just the quality of the learned
+                world model, highlighting that more research is needed to further improve the performance of
+                gradient-based planning.</li>
+              <li>Using pre-trained state-of-the-art world models for planning does not necessarily lead to a performance
+                improvement, suggesting that the world model should be learned with the objective of being useful for
+                planning.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is based on <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> and licensed
+              under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
