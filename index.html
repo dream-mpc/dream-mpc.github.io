@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="Gradient-Based Model Predictive Control for Planning with Latent Imagination.">
-  <meta name="keywords" content="Dream-MPC, Gradient-based Planning, Model Predictive Control, Reinforcement Learning, Robotics, World Models">
+  <meta name="keywords"
+    content="Dream-MPC, Gradient-based Planning, Model Predictive Control, Reinforcement Learning, Robotics, World Models">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dream-MPC: Gradient-Based Model Predictive Control for Planning with Latent Imagination</title>
 
@@ -56,13 +57,14 @@
       <div class="hero-body">
         <img class="center" src="./static/images/overview.png"
           style="width:70%; text-align: center; display:block; margin: 0 auto;"></img>
-          <div class="columns is-centered has-text-centered">
-            <div class="column is-four-fifths">
-              <div class="content" style="margin-top: 5px;">
-                Dream-MPC performs planning during test time by combining an imaginary policy rollout using a learned world model with MPC.
-              </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content" style="margin-top: 5px;">
+              Dream-MPC performs planning during test time by combining an imaginary policy rollout using a learned
+              world model with MPC.
             </div>
           </div>
+        </div>
       </div>
     </div>
   </section>
@@ -85,11 +87,12 @@
               We propose Dream-MPC, a novel approach that generates few candidate trajectories from a rolled-out policy
               and optimizes each trajectory by gradient ascent using a learned and differentiable world model.
               While gradient-based optimization methods can enable efficient planning both at training and test time and
-              can lead to better generalization, recent works have empirically shown that the gradient-based methods perform 
-              worse than their gradient-free counterparts. 
+              can lead to better generalization, recent works have empirically shown that the gradient-based methods
+              perform
+              worse than their gradient-free counterparts.
               We evaluate our method on different continuous control tasks from the DeepMind Control Suite
               and find that gradient-based planning can significantly improve the performance of learned but imperfect
-              policies at test time, but also already during training. Our results show that Dream-MPC can outperform 
+              policies at test time, but also already during training. Our results show that Dream-MPC can outperform
               state-of-the-art RL methods and can improve sample efficiency, highlighting
               the potential and challenges of gradient-based planning with world models.
             </p>
@@ -147,16 +150,19 @@
               <a href="https://arxiv.org/abs/2312.17227">hybrid Grad-MPC</a>) online RL methods.
             </p>
             <div class="publication-body img">
-              <img class="center" src="./static/images/learning_curves.png" style="width:100%; margin-bottom: 30px;"></img>
+              <img class="center" src="./static/images/learning_curves.png"
+                style="width:100%; margin-bottom: 30px;"></img>
             </div>
             <div class="publication-body img">
               <img class="center" src="./static/images/results.png" style="width:100%"></img>
             </div>
             <p>
-              The results are the mean episode returns and standard deviations for three random seeds and ten test episodes. <b>Best</b> and <u>second best</u> results are highlighted.
+              The results are the mean episode returns and standard deviations for three random seeds and ten test
+              episodes. <b>Best</b> and <u>second best</u> results are highlighted.
             </p>
           </div>
           <h3 class="title is-4">Qualitative Comparison with Dreamer</h3>
+          <h4 class="title is-5" style="margin-top: 20px;">DeepMind Control Suite</h4>
           <div class="body-content" style="padding-bottom: 0px;">
             <div class="container">
               <h4><b>Acrobot Swingup:</b></h4>
@@ -449,6 +455,153 @@
               </div>
             </div>
           </div>
+          <h4 class="title is-5" style="margin-top: 35px;">OpenAI Gym environments</h4>
+          <div class="body-content" style="padding-bottom: 0px;">
+            <div class="container">
+              <h4><b>MountainCarContinuous-v0:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dream-mpc_s9_e7_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dreamer_s9_e7_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dream-mpc_s428_e7_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dreamer_s428_e7_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dream-mpc_s831_e2_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dreamer_s831_e2_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dream-mpc_s9_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/MountainCarContinuous-v0_dreamer_s9_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <h4><b>Pendulum-v1:</b></h4>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dream-mpc_s9_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dreamer_s9_e0_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dream-mpc_s9_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dreamer_s9_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="grid-display"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dream-mpc_s428_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 40px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dreamer_s428_e1_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 10px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dream-mpc_s831_e3_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dream-MPC</h4>
+                  </div>
+                </div>
+                <div class="video-container" style="flex: 1 1 22%; margin-right: 0px;">
+                  <video class="img" style="width: 100%; height: auto; border: 1px solid #5e5c6499;" muted autoplay loop controls>
+                    <source src="./static/videos/Pendulum-v1_dreamer_s831_e3_h264.mp4" type="video/mp4">
+                  </video>
+                  <div style="text-align: center;">
+                    <h4 class="with-whitebackdrop">Dreamer</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
   </section>
 
@@ -463,12 +616,13 @@
               <li>Gradient-based planning can work successfully for complex problems and image-based observations and
                 can not only improve the performance of model-based RL during test time, but also already during
                 training.</li>
+              <li>Using pre-trained state-of-the-art world models for planning does not necessarily lead to a
+                performance
+                improvement, suggesting that the world model should be learned with the objective of being useful for
+                planning.</li>
               <li>The success of gradient-based planning depends on more aspects than just the quality of the learned
                 world model, highlighting that more research is needed to further improve the performance of
                 gradient-based planning.</li>
-              <li>Using pre-trained state-of-the-art world models for planning does not necessarily lead to a performance
-                improvement, suggesting that the world model should be learned with the objective of being useful for
-                planning.</li>
             </ul>
           </div>
         </div>
