@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Gradient-Based Model Predictive Control with Latent Imagination.">
+  <meta name="keywords" content="Dream-MPC, MPC, World Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dream-MPC: Gradient-Based Model Predictive Control with Latent Imagination</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Dream-MPC: Gradient-Based Model Predictive Control with Latent
+              Imagination</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Anonymous Authors
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Under Review</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (coming soon)</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <!-- <img src="static/images/animated.gif"> -->
+        <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+          <source src="./static/videos/overview.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Dream-MPC realizes gradient-based MPC by performing an imaginary rollout of a policy network in latent space
+          via a learned world model.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              State-of-the-art model-based Reinforcement Learning (RL) approaches either use gradient-free,
+              population-based methods for planning, learned policy networks, or a combination of policy networks and
+              planning. Hybrid approaches that combine Model Predictive Control (MPC) with a learned model and a policy
+              prior to efficiently leverage the benefits of both paradigms have shown promising results. However, these
+              hybrid approaches typically rely on gradient-free optimization methods, which can be computationally
+              expensive for high-dimensional control tasks.
+            </p>
+            <p>
+              While gradient-based methods are a promising approach, recent works have empirically shown that
+              gradient-based methods often perform worse than their gradient-free counterparts due to the fact that
+              gradient-based methods can converge to suboptimal local optima and are prone to exploding or vanishing
+              gradients. We propose Dream-MPC, a novel approach that generates few candidate trajectories from a
+              rolled-out policy and optimizes each trajectory by gradient ascent using a learned world model.
+            </p>
+            <p>
+              We incorporate uncertainty regularization directly into the optimization objective and amortize
+              optimization iterations over time by reusing previously optimized actions. We evaluate our method on
+              multiple continuous control tasks from the DeepMind Control Suite, Meta-World and HumanoidBench and show
+              that gradient-based MPC can significantly improve the performance of the underlying policy and can
+              outperform gradient-free MPC and state-of-the-art baselines.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Gradient-Based Model Predictive Control</h2>
+          <p>
+            We perform local trajectory optimization with a latent dynamics model. Instead of sampling
+            hundreds or thousands of action sequences at each step as done by gradient-free, sampling-based methods such
+            as the Cross-Entropy Method (CEM) or Model Predictive Path Integral (MPPI), Dream-MPC considers few samples
+            from the
+            policy prior and optimizes each action sequence by using gradient ascent to maximize the objective J. The
+            first action with the highest predicted return is applied, and the procedure is repeated for the next time
+            step.
+          </p>
+          <br />
+
+          <figure class="image is-fullwidth" style="display: flex; justify-content: center;">
+            <img src="./static/images/algo.png" alt="Dream-MPC algorithm" , style="width: 80%;">
+          </figure>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Comparison to Baselines</h2>
+          <p>For our experiments, we integrate Dream-MPC into <a href="https://arxiv.org/abs/2310.16828">TD-MPC2</a> and
+            <a href="https://arxiv.org/abs/2503.18871">BMPC</a> and evaluate it on 24 environments from the DeepMind
+            Control Suite, Meta-World and HumanoidBench.
+          </p>
+          <br />
+
+
+          <h3 class="title is-4">Planning at Test-Time</h3>
+          <div class="content has-text-justified">
+            <p>
+              We integrate our method into BMPC by replacing the MPPI planner with Dream-MPC during inference. As the
+              aggregated performance metrics across all 24 tasks show, Dream-MPC can improve the performance of the
+              underlying policy and outperform MPPI when using BMPC as a basis. While for TD-MPC2 our method can also
+              improve the performance of the policy, we can not consistently match the performance of MPPI. This
+              highlights the need for a good initial proposal for gradient-based MPC.
+            </p>
+          </div>
+          <figure class="image is-fullwidth" style="display: flex; justify-content: center;">
+            <img src="./static/images/aggregated_results.png" alt="Dream-MPC results" , style="width: 100%;">
+          </figure>
+          <br />
+
+          <h3 class="title is-4">Visual Observations</h3>
+          <div class="content has-text-justified">
+            <p>
+              Furthermore, we show that our method also works well with image-based observations and can outperform
+              MPPI.
+            </p>
+          </div>
+          <figure class="image is-fullwidth" style="display: flex; justify-content: center;">
+            <img src="./static/images/results_visual_observations.png" alt="Dream-MPC results for visual observations" ,
+              style="width: 70%;">
+          </figure>
+          <br />
+
+          <h3 class="title is-4">Planning during training</h3>
+          <div class="content has-text-justified">
+            <p>
+              Additionally, we evaluate the performance when enabling gradient-based planning already during training using TD-MPC2 as a basis.
+            </p>
+          </div>
+          <figure class="image is-fullwidth" style="display: flex; justify-content: center;">
+            <img src="./static/images/planning_during_training.png" alt="Dream-MPC learning curves" ,
+              style="width: 100%;">
+          </figure>
+
+        </div>
+      </div>
+      <br />
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Qualitative Results</h2>
+          <div class="content has-text-justified">
+            <p>
+              On top of the quantitative evaluation, we also provide videos of the evaluation episodes for the different environments when using Dream-MPC to optimize the actions at inference.
+            </p>
+          </div>
+          <h3 class="title is-4">DeepMind Control Suite</h3>
+          <div class="video-grid">
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/acrobot-swingup-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Acrobot Swingup</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/cartpole-swingup-sparse-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Cartpole Swingup Sparse</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/dog-run-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Dog Run</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/dog-walk-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Dog Walk</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/fish-swim-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Fish Swim</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/hopper-hop-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Hopper Hop</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid-run-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Humanoid Run</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid-walk-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Humanoid Walk</figcaption>
+            </figure>
+          </div>
+          <br />
+          <h3 class="title is-4">Meta-World</h3>
+          <div class="video-grid">
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-assembly-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Assembly</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-disassemble-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Disassemble</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-button-press-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Button Press</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-lever-pull-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Lever Pull</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-pick-place-wall-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Pick Place Wall</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-push-back-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Push Back</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-shelf-place-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Shelf Place</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/mw-window-open-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Window Open</figcaption>
+            </figure>
+          </div>
+          <br />
+          <h3 class="title is-4">HumanoidBench</h3>
+          <div class="video-grid">
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-balance_hard-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Balance Hard</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-balance_simple-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Balance Simple</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-hurdle-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Hurdle</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-maze-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Maze</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-reach-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Reach</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-run-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Run</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-slide-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Slide</figcaption>
+            </figure>
+            <figure class="video-card">
+              <div class="video-wrap">
+                <video class="img" style="width: 100%; height: auto;" muted autoplay loop controls>
+                  <source src="./static/videos/dream_mpc/humanoid_h1hand-stair-v0-0.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="caption">Stair</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Additional Results</h2>
+
+          <div class="content has-text-justified">
+            <p>
+              We further integrate our method into <a href="https://arxiv.org/abs/1912.01603">Dreamer</a> and also find
+              improvements in sample efficiency and asymptotic
+              performance when enabling planning during training.
+            </p>
+          </div>
+          <figure class="image is-fullwidth" style="display: flex; justify-content: center;">
+            <img src="./static/images/dreamer.png" alt="Dreamer results" , style="width: 100%;">
+          </figure>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Takeaways</h2>
+
+          <div class="content has-text-justified">
+            <ul>
+              <li>Amortization of optimization iterations over time and incorporating uncertainty are important to
+                overcome the limitations of previously proposed gradient-based MPC methods, namely worse performance
+                compared to their gradient-free equivalents and high computational costs.</li>
+              <li>Our results highlight that gradient-based MPC with learned world models is a promising direction to further
+                improve the performance of model-based RL algorithms.</li>
+              <li>While we use a single set of planning parameters across all experiments, the results suggest that it
+                may be beneficial to dynamically adapt the parameters such as the action optimization step size or
+                number of iterations to further improve the performance.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is based on the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies website</a>
+              and licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
