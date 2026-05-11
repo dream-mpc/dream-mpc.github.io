@@ -1,1 +1,1 @@
-This is the repository that contains the website for the paper "Dream-MPC: Gradient-Based Model Predictive Control with Latent Imagination".
+This is the repository that contains the website for the paper "Dream-MPC: Gradient-Based Model Predictive Control with Latent Imagination" by [Jonathan Spieler](https://jspieler.github.io/) and [Sven Behnke](https://www.ais.uni-bonn.de/behnke/). ICML 2026.

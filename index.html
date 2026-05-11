@@ -22,7 +22,7 @@
     gtag('config', 'G-PYVRSFMDRL');
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link href="https://fonts.bunny.net/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
@@ -48,25 +48,49 @@
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">Dream-MPC: Gradient-Based Model Predictive Control with Latent
               Imagination</h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">
-                Anonymous Authors
-              </span>
+
+            <div class="is-size-6 publication-venue">
+              <span class="author-block">International Conference on Machine Learning (ICML) 2026</span>
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block">Under Review</span>
+              <span class="author-block">
+                <a href="https://jspieler.github.io">Jonathan Spieler</a>,&nbsp;</span>
+              <span class="author-block">
+                <a href="https://www.ais.uni-bonn.de/behnke">Sven Behnke</a>,</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Autonomous Intelligent Systems, University of Bonn</span>
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2605.04568" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2605.04568" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
                 <!-- Code Link. -->
                 <span class="link-block">
-                  <a href="https://github.com" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://github.com/jspieler/dream-mpc"
+                    class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
                     </span>
-                    <span>Code (coming soon)</span>
+                    <span>Code</span>
                   </a>
                 </span>
               </div>
@@ -103,23 +127,20 @@
               State-of-the-art model-based Reinforcement Learning (RL) approaches either use gradient-free,
               population-based methods for planning, learned policy networks, or a combination of policy networks and
               planning. Hybrid approaches that combine Model Predictive Control (MPC) with a learned model and a policy
-              prior to efficiently leverage the benefits of both paradigms have shown promising results. However, these
-              hybrid approaches typically rely on gradient-free optimization methods, which can be computationally
-              expensive for high-dimensional control tasks.
+              prior to leverage the advantages of both paradigms have shown promising results. However, these approaches
+              typically rely on gradient-free optimization methods, which can be computationally expensive for
+              high-dimensional control tasks.
             </p>
             <p>
-              While gradient-based methods are a promising approach, recent works have empirically shown that
-              gradient-based methods often perform worse than their gradient-free counterparts due to the fact that
-              gradient-based methods can converge to suboptimal local optima and are prone to exploding or vanishing
-              gradients. We propose Dream-MPC, a novel approach that generates few candidate trajectories from a
-              rolled-out policy and optimizes each trajectory by gradient ascent using a learned world model.
+              While gradient-based methods are a promising alternative, recent works have empirically shown that
+              gradient-based methods often perform worse than their gradient-free counterparts. We propose Dream-MPC, a
+              novel approach that generates few candidate trajectories from a rolled-out policy and optimizes each
+              trajectory by gradient ascent using a learned world model, uncertainty regularization and amortization of
+              optimization iterations over time by reusing previously optimized actions.
             </p>
             <p>
-              We incorporate uncertainty regularization directly into the optimization objective and amortize
-              optimization iterations over time by reusing previously optimized actions. We evaluate our method on
-              multiple continuous control tasks from the DeepMind Control Suite, Meta-World and HumanoidBench and show
-              that gradient-based MPC can significantly improve the performance of the underlying policy and can
-              outperform gradient-free MPC and state-of-the-art baselines.
+              Our results on 24 continuous control tasks show that Dream-MPC can significantly improve the performance of
+              the underlying policy and can outperform gradient-free MPC and state-of-the-art baselines.
             </p>
           </div>
         </div>
@@ -200,7 +221,8 @@
           <h3 class="title is-4">Planning during training</h3>
           <div class="content has-text-justified">
             <p>
-              Additionally, we evaluate the performance when enabling gradient-based planning already during training using TD-MPC2 as a basis.
+              Additionally, we evaluate the performance when enabling gradient-based planning already during training
+              using TD-MPC2 as a basis.
             </p>
           </div>
           <figure class="image is-fullwidth" style="display: flex; justify-content: center;">
@@ -217,7 +239,8 @@
           <h2 class="title is-3">Qualitative Results</h2>
           <div class="content has-text-justified">
             <p>
-              On top of the quantitative evaluation, we also provide videos of the evaluation episodes for the different environments when using Dream-MPC to optimize the actions at inference.
+              On top of the quantitative evaluation, we also provide videos of the evaluation episodes for the different
+              environments when using Dream-MPC to optimize the actions at inference.
             </p>
           </div>
           <h3 class="title is-4">DeepMind Control Suite</h3>
@@ -453,7 +476,8 @@
               <li>Amortization of optimization iterations over time and incorporating uncertainty are important to
                 overcome the limitations of previously proposed gradient-based MPC methods, namely worse performance
                 compared to their gradient-free equivalents and high computational costs.</li>
-              <li>Our results highlight that gradient-based MPC with learned world models is a promising direction to further
+              <li>Our results highlight that gradient-based MPC with learned world models is a promising direction to
+                further
                 improve the performance of model-based RL algorithms.</li>
               <li>While we use a single set of planning parameters across all experiments, the results suggest that it
                 may be beneficial to dynamically adapt the parameters such as the action optimization step size or
@@ -466,8 +490,29 @@
     </div>
   </section>
 
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Citation</h2>
+      If you find our work useful, please consider citing the paper as follows:
+      <pre><code>@inproceedings{spieler2026dreammpc,
+  author    = {Spieler, Jonathan and Behnke, Sven},
+  title     = {Dream-{MPC}: Gradient-Based Model Predictive Control with Latent Imagination},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2026},
+}</code></pre>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://github.com/jspieler" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+        <a class="icon-link" href="https://de.linkedin.com/in/jspieler" class="external-link" disabled>
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
       <div class="columns is-centered">
         <div class="column is-8">
           <div class="content">
